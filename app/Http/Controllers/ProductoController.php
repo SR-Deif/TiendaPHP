@@ -32,7 +32,7 @@ class ProductoController extends Controller
         //selecionar la marca
         $categorias= Categoria::all();
         //Mostar la vista con las marcas uy categoria 
-        return view('producto.new')
+        return view('productos.new')
                    ->with('categorias',$categorias)
                    ->with('marcas',$marcas);
     }
