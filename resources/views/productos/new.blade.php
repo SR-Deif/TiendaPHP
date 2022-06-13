@@ -50,16 +50,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col s8 input-field">
+    <div class="col s8 input-field">
         <select name="marca" id="marca">
-@foreach($marcas as $marca)
-<option value="{{$marca->id}}">
-    {{ $marca->nombre }}
-</option>
-@endforeach
-    </select>
-    <label>Seleccione la marca</label>
-  </div>
+            @foreach($marcas as $marca)
+                <option value="{{$marca->id}}">
+                    {{ $marca->nombre }}
+                </option>
+            @endforeach
+        </select>
+        <label>Seleccione la marca</label>
+         </div>
 </div>
 <div class="row">
         <div class="col s8 input-field">
