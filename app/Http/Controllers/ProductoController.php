@@ -16,7 +16,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        echo "Hola aqui va la lista de los productos :3";
+        echo "Hola aqui va la lista de los productos :";
     }
 
     /**
@@ -45,7 +45,29 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //accerder a los datos del formulario con el objeto request
+       // echo"<pre>";
+        //var_dump($request->imagen);
+        //echo"<pre>";
+
+        $archivo = $request->imagen;
+        //carturar nombre "original"
+        $nombre_archivo = $archivo->getClientOriginalName();
+        var_dump($nombre_archivo);
+        //mover el archivo a la carpeta "public/img"
+        $ruta = public_path();
+        $archivo->move("$ruta/img", $nombre_archivo);
+        //registrar producto 
+        $producto = new Producto;
+        $producto->nombre = $request->nombre;
+        $producto->desc = $request->descripcion;
+        $producto->precio = $request->precio;
+        $producto->imagen = $nombre_archivo;
+        $producto->marca_id = $request->marca;
+        $producto->categoria_id = $request->categoria;
+        $producto->save();
+        echo "producto registrado";
+
     }
 
     /**

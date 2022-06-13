@@ -27,8 +27,8 @@
           float:left;
           width: 25%;
           position:absolute;
-          top:  -73%;
-          left: -18%;
+          top:  -30%;
+          left: -17%;
 
         }
 
@@ -36,7 +36,7 @@
           color: #0099CC;
           background: transparent;
           border: 2px solid #0099CC;
-          border-radius: 6px;
+          border-radius: 5px;
           
           border: none;
           color: white;
@@ -44,7 +44,7 @@
           text-align: center;
           display: inline-block;
           font-size: 20px;
-          margin: 4px 2px;
+          margin: 10px 20px;
           -webkit-transition-duration: 0.4s; /* Safari */
           transition-duration: 0.4s;
           cursor: pointer;
@@ -53,9 +53,9 @@
 
         }
         .btn1 {
-      background-color: white; 
-      color: white; 
-      border: 2px solid #008CBA;
+          background-color: white; 
+          color: white; 
+          border: 2px solid #008CBA;
 }
         
       </style>
@@ -73,9 +73,11 @@
   <div class="container">
       @yield('contenido')
   </div>
-  <script src="{{ asset('materialize/js/materialize.js') }}">
-
-  </script>
-    
+  <script src="{{ asset('materialize/js/materialize.js') }}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems,[]);
+  });</script>
 </body>
 </html>

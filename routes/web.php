@@ -107,3 +107,5 @@ Route::get('prueba', function(){
 
 //Rutas REST
 Route::resource('productos', ProductoController::class);
+
+?>
