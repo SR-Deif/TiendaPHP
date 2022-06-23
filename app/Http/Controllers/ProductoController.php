@@ -6,6 +6,8 @@ use App\Models\Producto;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Marca;
+// dependecia para el validador
+use Illuminate\Support\Facades\Validator;
 
 class ProductoController extends Controller
 {
@@ -26,9 +28,10 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('productos.new');
+        
 
         $marcas = Marca::all();
+      
         //selecionar la marca
         $categorias= Categoria::all();
         //Mostar la vista con las marcas uy categoria 
@@ -50,7 +53,39 @@ class ProductoController extends Controller
         //var_dump($request->imagen);
         //echo"<pre>";
 
-        $archivo = $request->imagen;
+            //validacion de datos formulario
+            //1. establecer las reglas de validacion para la 'input date' documento laravel validation
+            $reglas =[
+                "nombre"=>'required|alpha|unique:productos,nombre',
+                "descripcion"=>'required|min:5|max:20',
+                "precio"=>'required|numeric',
+                "imagen"=>'required|image',
+                "categoria"=>'required'
+            ];
+            //mensajes personalizados
+
+            $mensajes=[
+                "required"=> "Campo obligatorio",
+                "alpha" => "Solo letras",
+                "numeric" =>"Solo numeros",
+                "image"=>"Debe de ser una imagen",
+                "min"=>"minimo :min letras"
+
+            ];
+
+            //2. crear el objeto validador
+            $v = Validator::make($request->all(), $reglas, $mensajes);
+            //3. validar
+            //metodo fails() retorna
+            //true si la validacion falla
+            //false si los datos son validos
+            if($v->fails()){
+                //validacion incorrecta
+                //mostrar la vista new peo llevando los errores
+                return redirect('productos/create')
+                ->withErrors($v);
+            }else{
+                $archivo = $request->imagen;
         //carturar nombre "original"
         $nombre_archivo = $archivo->getClientOriginalName();
         var_dump($nombre_archivo);
@@ -66,8 +101,12 @@ class ProductoController extends Controller
         $producto->marca_id = $request->marca;
         $producto->categoria_id = $request->categoria;
         $producto->save();
-        echo "producto registrado";
-
+        //echo "producto registrado";
+        //redireccionar al formulario si el mensaje es exitoso 
+        return redirect('productos/create')
+        ->with("mensajito", "producto registrado");
+            }
+            //die(var_dump($v->fails()));
     }
 
     /**
